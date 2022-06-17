@@ -16,8 +16,11 @@ from typing import List, Any
 
 def delete_from_list(list_to_clean: List, item_to_delete: Any) -> List:
 
+
+    #Check if item to delete appears inside list to clean
     if item_to_delete in list_to_clean:
-        for i in list_to_clean:
+        for i in list_to_clean:#Iterate
+            #If find element coocurrence, delete found first coocurence index
             if i == item_to_delete:
                 list_to_clean.pop(list_to_clean.index(i))
 
