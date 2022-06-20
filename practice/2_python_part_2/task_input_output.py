@@ -18,6 +18,20 @@ Examples:
 
 
 def read_numbers(n: int) -> str:
-    ...
+    sum=0
+    nNumbers = 0
+    print("Enter",n,"numbers:")
+    for i in range(n):
+        try:
+            number = int(input())
+            sum+=number
+            nNumbers+=1
+        except ValueError:
+            pass
+    if nNumbers==0:
+        print("No numbers entered")
+    else:
+        print("Avg:", round(sum/nNumbers,2))
 
 
+read_numbers(5)
