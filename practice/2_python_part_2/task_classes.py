@@ -39,10 +39,9 @@ class Teacher:
         self.first_name = first_name
 
     def create_homework(self,task,days):
-        desiredDate =  datetime.datetime(datetime.datetime.now().year,
+        homework = Homework(task,datetime.datetime(datetime.datetime.now().year,
                                          datetime.datetime.now().month ,
-                                         datetime.datetime.now().day + days)
-        homework = Homework(task,desiredDate)
+                                         datetime.datetime.now().day + days))
         return homework
 
 class Student:

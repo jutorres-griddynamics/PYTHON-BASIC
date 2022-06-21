@@ -40,10 +40,8 @@ def division(x: int, y: int) -> typing.Union[None, int]:
             return x/y
     except zero_Division:
         print("Division by 0")
-        print()
     except same_Result:
         print("Deletion on 1 get the same result")
-        print()
 division(1, 0)
 division(1, 1)
 division(2, 2)

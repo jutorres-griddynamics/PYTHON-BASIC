@@ -30,8 +30,15 @@ def read_numbers(n: int) -> str:
             pass
     if nNumbers==0:
         print("No numbers entered")
+        return "No numbers entered"
     else:
         print("Avg:", round(sum/nNumbers,2))
+        return ("Avg:", round(sum/nNumbers,2))
 
+def main():
+    read_numbers(5)
 
-read_numbers(5)
+if __name__ == "__main__":
+    # execute only if run as a script
+    main()
+
