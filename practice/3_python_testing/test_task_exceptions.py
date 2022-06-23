@@ -10,7 +10,7 @@ https://stackoverflow.com/a/20507769
 import pytest
 import sys
 # insert at 1, 0 is the script path (or '' in REPL)
-sys.path.insert(1, '/Users/julitorresma/PycharmProjects/PYTHON-BASIC/practice/2_python_part_2')
+sys.path.insert(1, '/Users/ julitorresma/PycharmProjects/PYTHON-BASIC/practice/2_python_part_2')
 from task_exceptions import division
 
 def test_division_ok(capfd):

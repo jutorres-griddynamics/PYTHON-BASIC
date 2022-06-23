@@ -36,7 +36,7 @@ def test_read_numbers_without_text_input(monkeypatch):
     '''
     for i in range(numbers_n):
         input_mock_y = Mock()
-        input_mock_y.return_value = str(inputList[i])
+        input_mock_y.return_value =     str(inputList[i])
         list_atributes.append(input_mock_y.return_value)
     input_mock.side_effect = list_atributes
     with patch('builtins.input', input_mock) as mock_method:
