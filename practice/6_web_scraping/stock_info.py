@@ -33,51 +33,66 @@ Links:
     - beautiful soup docs: https://www.crummy.com/software/BeautifulSoup/bs4/doc/
     - lxml docs: https://lxml.de/
 """
-
+countries = ['AFGHANISTAN', 'ALAND ISLANDS', 'ALBANIA', 'ALGERIA', 'AMERICAN SAMOA', 'ANDORRA', 'ANGOLA', 'ANGUILLA', 'ANTARCTICA', 'ANTIGUA AND BARBUDA', 'ARGENTINA', 'ARMENIA', 'ARUBA', 'AUSTRALIA', 'AUSTRIA', 'AZERBAIJAN', 'BAHAMAS', 'BAHRAIN', 'BANGLADESH', 'BARBADOS', 'BELARUS', 'BELGIUM', 'BELIZE', 'BENIN', 'BERMUDA', 'BHUTAN', 'BOLIVIA, PLURINATIONAL STATE OF', 'BONAIRE, SINT EUSTATIUS AND SABA', 'BOSNIA AND HERZEGOVINA', 'BOTSWANA', 'BOUVET ISLAND', 'BRAZIL', 'BRITISH INDIAN OCEAN TERRITORY', 'BRUNEI DARUSSALAM', 'BULGARIA', 'BURKINA FASO', 'BURUNDI', 'CAMBODIA', 'CAMEROON', 'CANADA', 'CAPE VERDE', 'CAYMAN ISLANDS', 'CENTRAL AFRICAN REPUBLIC', 'CHAD', 'CHILE', 'CHINA', 'CHRISTMAS ISLAND', 'COCOS (KEELING) ISLANDS', 'COLOMBIA', 'COMOROS', 'CONGO', 'CONGO, THE DEMOCRATIC REPUBLIC OF THE', 'COOK ISLANDS', 'COSTA RICA', "CÔTE D'IVOIRE", 'CROATIA', 'CUBA', 'CURAÇAO', 'CYPRUS', 'CZECH REPUBLIC', 'DENMARK', 'DJIBOUTI', 'DOMINICA', 'DOMINICAN REPUBLIC', 'ECUADOR', 'EGYPT', 'EL SALVADOR', 'EQUATORIAL GUINEA', 'ERITREA', 'ESTONIA', 'ETHIOPIA', 'FALKLAND ISLANDS (MALVINAS)', 'FAROE ISLANDS', 'FIJI', 'FINLAND', 'FRANCE', 'FRENCH GUIANA', 'FRENCH POLYNESIA', 'FRENCH SOUTHERN TERRITORIES', 'GABON', 'GAMBIA', 'GEORGIA', 'GERMANY', 'GHANA', 'GIBRALTAR', 'GREECE', 'GREENLAND', 'GRENADA', 'GUADELOUPE', 'GUAM', 'GUATEMALA', 'GUERNSEY', 'GUINEA', 'GUINEA-BISSAU', 'GUYANA', 'HAITI', 'HEARD ISLAND AND MCDONALD ISLANDS', 'HOLY SEE (VATICAN CITY STATE)', 'HONDURAS', 'HONG KONG', 'HUNGARY', 'ICELAND', 'INDIA', 'INDONESIA', 'IRAN, ISLAMIC REPUBLIC OF', 'IRAQ', 'IRELAND', 'ISLE OF MAN', 'ISRAEL', 'ITALY', 'JAMAICA', 'JAPAN', 'JERSEY', 'JORDAN', 'KAZAKHSTAN', 'KENYA', 'KIRIBATI', "KOREA, DEMOCRATIC PEOPLE'S REPUBLIC OF", 'KOREA, REPUBLIC OF', 'KUWAIT', 'KYRGYZSTAN', "LAO PEOPLE'S DEMOCRATIC REPUBLIC", 'LATVIA', 'LEBANON', 'LESOTHO', 'LIBERIA', 'LIBYA', 'LIECHTENSTEIN', 'LITHUANIA', 'LUXEMBOURG', 'MACAO', 'MACEDONIA, REPUBLIC OF', 'MADAGASCAR', 'MALAWI', 'MALAYSIA', 'MALDIVES', 'MALI', 'MALTA', 'MARSHALL ISLANDS', 'MARTINIQUE', 'MAURITANIA', 'MAURITIUS', 'MAYOTTE', 'MEXICO', 'MICRONESIA, FEDERATED STATES OF', 'MOLDOVA, REPUBLIC OF', 'MONACO', 'MONGOLIA', 'MONTENEGRO', 'MONTSERRAT', 'MOROCCO', 'MOZAMBIQUE', 'MYANMAR', 'NAMIBIA', 'NAURU', 'NEPAL', 'NETHERLANDS', 'NEW CALEDONIA', 'NEW ZEALAND', 'NICARAGUA', 'NIGER', 'NIGERIA', 'NIUE', 'NORFOLK ISLAND', 'NORTHERN MARIANA ISLANDS', 'NORWAY', 'OMAN', 'PAKISTAN', 'PALAU', 'PALESTINIAN TERRITORY, OCCUPIED', 'PANAMA', 'PAPUA NEW GUINEA', 'PARAGUAY', 'PERU', 'PHILIPPINES', 'PITCAIRN', 'POLAND', 'PORTUGAL', 'PUERTO RICO', 'QATAR', 'RÉUNION', 'ROMANIA', 'RUSSIAN FEDERATION', 'RWANDA', 'SAINT BARTHÉLEMY', 'SAINT HELENA, ASCENSION AND TRISTAN DA CUNHA', 'SAINT KITTS AND NEVIS', 'SAINT LUCIA', 'SAINT MARTIN (FRENCH PART)', 'SAINT PIERRE AND MIQUELON', 'SAINT VINCENT AND THE GRENADINES', 'SAMOA', 'SAN MARINO', 'SAO TOME AND PRINCIPE', 'SAUDI ARABIA', 'SENEGAL', 'SERBIA', 'SEYCHELLES', 'SIERRA LEONE', 'SINGAPORE', 'SINT MAARTEN (DUTCH PART)', 'SLOVAKIA', 'SLOVENIA', 'SOLOMON ISLANDS', 'SOMALIA', 'SOUTH AFRICA', 'SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS', 'SPAIN', 'SRI LANKA', 'SUDAN', 'SURINAME', 'SOUTH SUDAN', 'SVALBARD AND JAN MAYEN', 'SWAZILAND', 'SWEDEN', 'SWITZERLAND', 'SYRIAN ARAB REPUBLIC', 'TAIWAN, PROVINCE OF CHINA', 'TAJIKISTAN', 'TANZANIA, UNITED REPUBLIC OF', 'THAILAND', 'TIMOR-LESTE', 'TOGO', 'TOKELAU', 'TONGA', 'TRINIDAD AND TOBAGO', 'TUNISIA', 'TURKEY', 'TURKMENISTAN', 'TURKS AND CAICOS ISLANDS', 'TUVALU', 'UGANDA', 'UKRAINE', 'UNITED ARAB EMIRATES', 'UNITED KINGDOM', 'UNITED STATES', 'UNITED STATES MINOR OUTLYING ISLANDS', 'URUGUAY', 'UZBEKISTAN', 'VANUATU', 'VENEZUELA, BOLIVARIAN REPUBLIC OF', 'VIET NAM', 'VIRGIN ISLANDS, BRITISH', 'VIRGIN ISLANDS, U.S.', 'WALLIS AND FUTUNA', 'YEMEN', 'ZAMBIA', 'ZIMBABWE']
 import requests
 from bs4 import BeautifulSoup
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
-import os
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-import pandas as pd
-import time
 
-from selenium import webdriver
-import time
-def get_table_rows(driver):
-    """Get number of rows available on the page """
-    tablerows = len(driver.find_elements(By.XPATH, value='//*[@id="scr-res-table"]/div[1]/table/tbody/tr'))
-    return tablerows
+company_summary = {}
+url = "https://finance.yahoo.com/most-active"
+page = requests.get(url)
+soup = BeautifulSoup(page.content, 'html.parser')
 
-def get_table_header(driver):
-    """Return Table columns in list form """
-    header = driver.find_elements(By.TAG_NAME, value= 'th')
-    header_list = [item.text for index, item in enumerate(header) if index < 10]
-    return header_list
+code_tables = soup.find_all("a", class_="Fw(600) C($linkColor)")
 
-def get_driver(url):
-    """Return web driver"""
-    options = webdriver.ChromeOptions()
-    options.add_argument("--start-maximized")
-    options.add_argument('--log-level=3')
+# Find all links to profile
+profile_links = soup.find_all("a", href=True)
+href = []
+for table in code_tables:
+    href.append(table['href'])
+    company_summary['company']=table['title']
+country = []
 
-    # Provide the path of chromedriver present on your system.
-    driver = webdriver.Chrome(executable_path="/Users/julitorresma/Downloads/chromedriver",
-                              chrome_options=options)
-    driver.get(url)
+for link in href:
+    #Name, Code, Country, Employees, CEO Name, CEO Year Born.
+    top_companies = {}
+    # Make request to link
+    company_page = requests.get('https://finance.yahoo.com' + link)
+    company_soup = BeautifulSoup(company_page.content, 'html.parser')
+    profile_content = company_soup.find('p', class_="D(ib) W(47.727%) Pend(40px)").strings
 
-    return driver
+    #top_companies['Name'] = company_soup.find_all('h3',class_='Fz(m) Mb(10px)')
+    company_summary['Code'] = str(link).split('=')[-1]
 
-driver = get_driver('https://finance.yahoo.com/cryptocurrencies')
-print(driver.title)
-header = driver.find_elements(By.TAG_NAME, value= 'th')
-print(header[0].text)
-print(header[2].text)
+    #Contry
+    for strings in profile_content:
+        if strings.upper() in countries:
+            top_companies['Country'] = strings
+    #Employees
+    employes_tag_p = company_soup.find('p', class_='D(ib) Va(t)')
+    span = employes_tag_p.find_all('span', class_='Fw(600)')
+    top_companies['Employees'] = span[2].text
+    company_summary['summary'] = top_companies
 
-txt=driver.find_element(By.XPATH, value='//*[@id="scr-res-table"]/div[1]/table/tbody/tr[1]').text
+    #CEO INFORMATION
+    employees_list = soup.find_all("tr", class_="C($primaryColor) BdB Bdc($seperatorColor) H(36px)")
 
-print(get_table_rows(driver))
+    href = []
+    for table in employees_list:
+        href.append(table['href'])
+        company_summary['company'] = table['title']
+
+    #CEO Name
+
+print(company_summary)
+
+
+
+
+'''
+ESTRATEGIA:
+
+YA TENGO LOS URL A TODOS LOS PERFILES
+YA PUEDO ACCEDER AL PAIS
+DATOS A ENCONTRAR: Name, Code, Country, Employees, CEO Name, CEO Year Born.
+
+'''
