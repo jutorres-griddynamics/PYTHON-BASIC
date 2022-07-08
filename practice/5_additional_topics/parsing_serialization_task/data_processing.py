@@ -96,25 +96,3 @@ for i in dict_city_info.keys():
 
 tree = ET.ElementTree(root)
 tree.write("filename.xml")
-
-
-
-
-
-
-
-
-# We can attach attributes
-# to an element using
-# set() method
-
-# now that we have the pertinent json data in our DataFrame let's look at it
-
-#print("Mean temperature in country:",mean_temp_country)
-#print("Mean wind speed in country:",mean_windSpeed_country)
-#print("Coldest Place:",min(dict_city_mean_temp, key=dict_city_mean_temp.get))
-#print("Warmest Place:",max(dict_city_mean_temp, key=dict_city_mean_temp.get))
-#print("Windiest Place:",max(dict_city_mean_windSpeed, key=dict_city_mean_windSpeed.get))
-
-#print(dict_city_mean_temp)
-#print(dict_city_info)
