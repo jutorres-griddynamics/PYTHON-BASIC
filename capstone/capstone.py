@@ -115,6 +115,7 @@ class Cli:
         except Exception as ex:
             print(ex)
             return False
+
     def jsons_printing(self):
         for i in range(int(self.args.data_lines[0])):
             # CREATING EACH DICTIONARY TO BE APPENDED TO JSON FILE
