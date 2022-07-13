@@ -102,9 +102,7 @@ class Cli:
             # ITERATE THRU NUMBER OF FILES
             if int(self.args.file_count[0]) == 0:
                 # Writing to JSON File with corresponding prefix
-                name_difference = self.file_prefix(0, self.args.prefix[0])
-                self.file_name = f"{self.args.path_to_save_files[0]}/{self.args.file_name[0]}_{name_difference}"
-                self.p.apply_async(self.jsons_generation())
+                self.p.apply_async(self.jsons_printing())
             else:
                 for i in range(int(self.args.file_count[0])):
                     # Writing to JSON File with corresponding prefix
@@ -114,8 +112,16 @@ class Cli:
                 self.p.close()
                 self.p.join()
             return True
-        except:
+        except Exception as ex:
+            print(ex)
             return False
+    def jsons_printing(self):
+        for i in range(int(self.args.data_lines[0])):
+            # CREATING EACH DICTIONARY TO BE APPENDED TO JSON FILE
+            dictionary = self.json_analysis(self.data)
+            # Serializing json
+            json_object = json.dumps(dictionary)
+            print(json_object)
 
     def jsons_generation(self):
         with open(f"{self.file_name}.json", "w", encoding='utf8') as outfile:
@@ -125,12 +131,9 @@ class Cli:
                 dictionary = self.json_analysis(self.data)
                 # Serializing json
                 json_object = json.dumps(dictionary)
-                if int(self.args.file_count[0]) == 0:
-                    print(json_object)
-                elif int(self.args.file_count[0]) > 0:
-                    # WRITING LINE TO JSON FILE
-                    outfile.write(json_object)
-                    outfile.write('\n')
+                # WRITING LINE TO JSON FILE
+                outfile.write(json_object)
+                outfile.write('\n')
 
     def json_analysis(self, json_file):
         unitary_dictionary = {}
